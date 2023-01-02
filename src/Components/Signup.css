@@ -1,0 +1,27 @@
+.login{
+    background-image: url("../Assets/protruding-squares.svg");
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    width: 100vw;
+    align-items: center;
+    justify-content: center;
+}
+
+.options{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+    padding: 8%;
+    gap: 40px;
+    color: red;
+    font-size: 32px;
+    border-radius: 30px;
+    border: none;
+}
+
+.icon{
+    padding-right: 10px;
+}
