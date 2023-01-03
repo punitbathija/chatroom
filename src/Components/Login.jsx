@@ -9,7 +9,7 @@ function Login() {
 
   return (
     <div className="login">
-      <form className="options">
+      <form className="option">
         Login
         <TextField
           color="error"

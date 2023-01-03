@@ -8,8 +8,8 @@ function Login() {
   const [password, setPassword] = useState("");
 
   return (
-    <div className="login">
-      <form className="options">
+    <div className="signin">
+      <form className="form">
         Sign Up
         <TextField
           color="error"

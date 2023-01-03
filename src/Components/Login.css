@@ -1,25 +1,31 @@
 .login{
-    background-image: url("../Assets/protruding-squares.svg");
+    background-image: url("../Assets/Sea\ of\ Clouds-10s-1490px.svg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
     display: flex;
     flex-direction: column;
     height: 100vh;
     width: 100vw;
     align-items: center;
-    justify-content: center;
+    justify-content: center;   
 }
 
-.options{
+.option{
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background-color: white;
-    padding: 8%;
-    gap: 40px;
-    color: red;
+    padding: 4%;
+    gap: 35px;
     font-size: 32px;
-    border-radius: 30px;
-    border: none;
+    height: fit-content;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
 .icon{
@@ -31,5 +37,6 @@ small{
 }
 
 a{
+    cursor: pointer;
     color: blue;
 }
