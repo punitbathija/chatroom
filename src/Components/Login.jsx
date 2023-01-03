@@ -18,10 +18,11 @@ function Login() {
   const auth = getAuth(firebase);
 
   async function login() {
-    signInWithEmailAndPassword(auth, email, password)
+    await signInWithEmailAndPassword(auth, email, password)
       .then((userCredentials) => {
         const user = userCredentials.user;
         console.log(user);
+        console.log("Signed in");
       })
       .catch((error) => {
         console.log(error);
