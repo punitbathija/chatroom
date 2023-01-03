@@ -21,8 +21,6 @@ function Login() {
     await signInWithEmailAndPassword(auth, email, password)
       .then((userCredentials) => {
         const user = userCredentials.user;
-        console.log(user);
-        console.log("Signed in");
       })
       .catch((error) => {
         console.log(error);
@@ -32,7 +30,6 @@ function Login() {
   async function loginWGoogle() {
     const provider = new GoogleAuthProvider();
     await signInWithPopup(auth, provider);
-    const user = provider;
   }
 
   return (

@@ -1,0 +1,25 @@
+.chatroom{
+    background-image: url("../Assets/Sea\ of\ Clouds-10s-1490px.svg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    width: 100vw;
+}
+
+.profile{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    margin: 50px;
+    gap: 30px;
+    font-size: 26px;
+
+}
+
+.icons{
+    color: black;
+    margin-top: 30px;
+}
