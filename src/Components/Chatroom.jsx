@@ -23,18 +23,57 @@ function Chatroom() {
   }
 
   function initFirebaseAuth() {
-    onAuthStateChanged(getAuth);
+    console.log(onAuthStateChanged(getAuth));
   }
 
   return (
     <div className="chatroom">
       <div className="profile">
-        {/* <AccountCircleIcon className="icons" fontSize="large" /> */}
-        <div>{getProfilePicUrl}</div>
-        <p>{getUserName}</p>
+        <AccountCircleIcon className="icons" fontSize="large" />
+        <p>Punit Bathija</p>
         <LogoutIcon className="icons" fontSize="large" onClick={logOut} />
       </div>
-      <div className="chats"></div>
+      <div className="chats">
+        <div className="contact">
+          <AccountCircleIcon className="icon" fontSize="large" />
+          <p>Chetan</p>
+        </div>
+        <p className="message">
+          This a test message and this chatroom is litt!
+        </p>
+        <div className="contact">
+          <AccountCircleIcon className="icon" fontSize="large" />
+          <p>Chetan</p>
+        </div>
+        <p className="message">
+          This a test message and this chatroom is litt!
+        </p>
+        <div className="contact">
+          <AccountCircleIcon className="icon" fontSize="large" />
+          <p>Chetan</p>
+        </div>
+        <p className="message">
+          This a test message and this chatroom is litt!
+        </p>
+        <div className="my-contact">
+          <AccountCircleIcon className="icon" fontSize="large" />
+          <p>Punit</p>
+        </div>
+        <p className="my-message">This is also a test message</p>
+        <div className="my-contact">
+          <AccountCircleIcon className="icon" fontSize="large" />
+          <p>Punit</p>
+        </div>
+        <p className="my-message">This is also a test message</p>
+        <div className="my-contact">
+          <AccountCircleIcon className="icon" fontSize="large" />
+          <p>Punit</p>
+        </div>
+        <p className="my-message">This is also a test message</p>
+      </div>
+      <div className="input">
+        <input type="text" className="text-input" />
+      </div>
     </div>
   );
 }
