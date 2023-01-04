@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { TextField, Button } from "@mui/material";
+import { TextField, Button, Alert } from "@mui/material";
 import "./Login.css";
 import GoogleIcon from "@mui/icons-material/Google";
 import firebaseConfig from "../config/firebase.config";
@@ -16,11 +16,13 @@ function Login() {
   const [password, setPassword] = useState("");
   const firebase = initializeApp(firebaseConfig);
   const auth = getAuth(firebase);
+  const loggedin = false;
 
   async function login() {
     await signInWithEmailAndPassword(auth, email, password)
       .then((userCredentials) => {
         const user = userCredentials.user;
+        loggedin = true;
       })
       .catch((error) => {
         console.log(error);
