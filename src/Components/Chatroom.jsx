@@ -1,7 +1,10 @@
 import React from "react";
 import "./Chatroom.css";
+import AddAPhotoIcon from "@mui/icons-material/AddAPhoto";
+import InsertEmoticonIcon from "@mui/icons-material/InsertEmoticon";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import LogoutIcon from "@mui/icons-material/Logout";
+import SendIcon from "@mui/icons-material/Send";
 import firebaseConfig from "../config/firebase.config";
 import { initializeApp } from "firebase/app";
 import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
@@ -72,7 +75,10 @@ function Chatroom() {
         <p className="my-message">This is also a test message</p>
       </div>
       <div className="input">
+        <AddAPhotoIcon />
+        <InsertEmoticonIcon />
         <input type="text" className="text-input" />
+        <SendIcon />
       </div>
     </div>
   );
