@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "./Chatroom.css";
 import AddAPhotoIcon from "@mui/icons-material/AddAPhoto";
 import InsertEmoticonIcon from "@mui/icons-material/InsertEmoticon";
@@ -12,6 +12,7 @@ import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 function Chatroom() {
   const firebase = initializeApp(firebaseConfig);
   const auth = getAuth(firebase);
+  const [text, setText] = useState("");
 
   function logOut() {
     signOut(getAuth());
@@ -76,8 +77,15 @@ function Chatroom() {
       </div>
       <div className="input">
         <AddAPhotoIcon />
-        <InsertEmoticonIcon />
-        <input type="text" className="text-input" />
+        <div>
+          <InsertEmoticonIcon />
+        </div>
+        <input
+          type="text"
+          className="text-input"
+          value={text}
+          onChange={(e) => setText(e.target.value)}
+        />
         <SendIcon />
       </div>
     </div>
