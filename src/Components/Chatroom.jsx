@@ -8,11 +8,12 @@ import SendIcon from "@mui/icons-material/Send";
 import firebaseConfig from "../config/firebase.config";
 import { initializeApp } from "firebase/app";
 import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
+import EmojiPicker from "emoji-picker-react";
 
 function Chatroom() {
   const firebase = initializeApp(firebaseConfig);
   const auth = getAuth(firebase);
-  const [text, setText] = useState("");
+  const [inputText, setInputText] = useState("");
 
   function logOut() {
     signOut(getAuth());
@@ -28,6 +29,18 @@ function Chatroom() {
 
   function initFirebaseAuth() {
     console.log(onAuthStateChanged(getAuth));
+  }
+
+  function sendChat() {
+    return (
+      <div>
+        <div className="my-contact">
+          <AccountCircleIcon className="icon" fontSize="large" />
+          <p>Punit</p>
+        </div>
+        <p className="my-message">{inputText}</p>
+      </div>
+    );
   }
 
   return (
@@ -83,10 +96,12 @@ function Chatroom() {
         <input
           type="text"
           className="text-input"
-          value={text}
-          onChange={(e) => setText(e.target.value)}
+          value={inputText}
+          onChange={(e) => setInputText(e.target.value)}
         />
-        <SendIcon />
+        <div onClick={sendChat}>
+          <SendIcon />
+        </div>
       </div>
     </div>
   );
