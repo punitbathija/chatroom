@@ -10,28 +10,55 @@ import {
   signInWithPopup,
   signInWithEmailAndPassword,
 } from "firebase/auth";
+import { useDispatch } from "react-redux";
+import { login } from "../features/userSlice";
 
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const firebase = initializeApp(firebaseConfig);
   const auth = getAuth(firebase);
-  const loggedin = false;
+  const disptach = useDispatch;
 
-  async function login() {
-    await signInWithEmailAndPassword(auth, email, password)
-      .then((userCredentials) => {
-        const user = userCredentials.user;
-        loggedin = true;
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+  // async function login(e) {
+  //   await signInWithEmailAndPassword(auth, email, password)
+  //     .then((userCredentials) => {
+  //       disptach(
+  //         login({
+  //           email: userCredentials.user.email,
+  //           uid: userCredentials.user.uid,
+  //           displayName: userCredentials.user.displayName,
+  //         })
+  //       );
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //     });
+  // }
+
+  const login = (e) =>{
+    signInWithEmailAndPassword(auth, email, password)
+    .then((userCredentials)=>{
+      disptach(
+        login({
+          email : userCredentials.user.email,
+          uid : userCredentials.user.
+        })
+      )
+    })
   }
 
   async function loginWGoogle() {
     const provider = new GoogleAuthProvider();
-    await signInWithPopup(auth, provider);
+    await signInWithPopup(auth, provider).then((userCredentials) => {
+      disptach(
+        login({
+          email: userCredentials.user.email,
+          uid: userCredentials.user.uid,
+          displayName: userCredentials.user.displayName,
+        })
+      );
+    });
   }
 
   return (
