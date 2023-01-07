@@ -9,18 +9,27 @@ import {
   getAuth,
   GoogleAuthProvider,
   signInWithPopup,
+  updateProfile,
 } from "firebase/auth";
+import { useDispatch } from "react-redux";
+import { login } from "../features/userSlice";
 
-function Login() {
+function Signup() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [displayName, setDisplayName] = useState("");
+
   const firebase = initializeApp(firebaseConfig);
   const auth = getAuth(firebase);
+  const dispatch = useDispatch();
 
   async function signUp() {
     await createUserWithEmailAndPassword(auth, email, password)
       .then((userCredentials) => {
-        const user = userCredentials.user;
+        updateProfile(userCredentials.user, {
+          displayName: displayName,
+        });
+        console.log(userCredentials.user);
       })
       .catch((error) => {
         console.log(error);
@@ -29,13 +38,31 @@ function Login() {
 
   async function signupWGoogle() {
     const provider = new GoogleAuthProvider();
-    await signInWithPopup(auth, provider);
+    await signInWithPopup(auth, provider).then((userCredentials) => {
+      dispatch(
+        login({
+          email: userCredentials.user.email,
+          uid: userCredentials.user.uid,
+          displayName: userCredentials.user.displayName,
+        })
+      );
+      console.log(userCredentials.user);
+    });
   }
 
   return (
     <div className="signin">
       <form className="form">
         Sign Up
+        <TextField
+          color="error"
+          id="outlined-basic"
+          label="display name"
+          variant="outlined"
+          type="text"
+          value={displayName}
+          onChange={(e) => setDisplayName(e.target.value)}
+        />
         <TextField
           color="error"
           id="outlined-basic"
@@ -74,4 +101,4 @@ function Login() {
   );
 }
 
-export default Login;
+export default Signup;

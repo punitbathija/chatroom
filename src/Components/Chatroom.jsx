@@ -8,7 +8,7 @@ import SendIcon from "@mui/icons-material/Send";
 import firebaseConfig from "../config/firebase.config";
 import { initializeApp } from "firebase/app";
 import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
-import EmojiPicker from "emoji-picker-react";
+import Emoji from "./emoji";
 
 function Chatroom() {
   const firebase = initializeApp(firebaseConfig);
@@ -16,7 +16,7 @@ function Chatroom() {
   const [inputText, setInputText] = useState("");
 
   function logOut() {
-    signOut(getAuth());
+    signOut(getAuth()).then(console.log("Logged Out"));
   }
 
   function getProfilePicUrl() {
@@ -25,10 +25,6 @@ function Chatroom() {
 
   function getUserName() {
     return getAuth().currentUser.displayName;
-  }
-
-  function initFirebaseAuth() {
-    console.log(onAuthStateChanged(getAuth));
   }
 
   function sendChat() {
@@ -48,7 +44,9 @@ function Chatroom() {
       <div className="profile">
         <AccountCircleIcon className="icons" fontSize="large" />
         <p>Punit Bathija</p>
-        <LogoutIcon className="icons" fontSize="large" onClick={logOut} />
+        <div onClick={logOut}>
+          <LogoutIcon className="icons" fontSize="large" />
+        </div>
       </div>
       <div className="chats">
         <div className="contact">
@@ -92,6 +90,7 @@ function Chatroom() {
         <AddAPhotoIcon />
         <div>
           <InsertEmoticonIcon />
+          <Emoji />
         </div>
         <input
           type="text"

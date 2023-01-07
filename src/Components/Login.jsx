@@ -18,7 +18,7 @@ function Login() {
   const [password, setPassword] = useState("");
   const firebase = initializeApp(firebaseConfig);
   const auth = getAuth(firebase);
-  const disptach = useDispatch;
+  const dispatch = useDispatch();
 
   // async function login(e) {
   //   await signInWithEmailAndPassword(auth, email, password)
@@ -36,22 +36,24 @@ function Login() {
   //     });
   // }
 
-  const login = (e) =>{
-    signInWithEmailAndPassword(auth, email, password)
-    .then((userCredentials)=>{
-      disptach(
-        login({
-          email : userCredentials.user.email,
-          uid : userCredentials.user.
-        })
-      )
-    })
-  }
+  const loginToApp = (e) => {
+    signInWithEmailAndPassword(auth, email, password).then(
+      (userCredentials) => {
+        dispatch(
+          login({
+            email: userCredentials.user.email,
+            uid: userCredentials.user.uid,
+          })
+        );
+        console.log(userCredentials.user.email);
+      }
+    );
+  };
 
   async function loginWGoogle() {
     const provider = new GoogleAuthProvider();
     await signInWithPopup(auth, provider).then((userCredentials) => {
-      disptach(
+      dispatch(
         login({
           email: userCredentials.user.email,
           uid: userCredentials.user.uid,
@@ -83,7 +85,12 @@ function Login() {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
-        <Button color="error" variant="contained" fullWidth onClick={login}>
+        <Button
+          color="error"
+          variant="contained"
+          fullWidth
+          onClick={loginToApp}
+        >
           Login
         </Button>
         <Button
