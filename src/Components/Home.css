@@ -1,0 +1,33 @@
+.home{
+    background-image: url("../Assets/Sea\ of\ Clouds-10s-1490px.svg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    width: 100%;
+    align-items: center;
+    justify-content: center;   
+}
+
+.top{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    gap: 60px;
+}
+
+h1{
+    font-size: medium;
+    width: 300px;
+}
+
+.img{
+    width: 500px;
+    height: 500px;
+}
+
+.hero{
+    display: flex;
+}
