@@ -8,12 +8,18 @@ import SendIcon from "@mui/icons-material/Send";
 import firebaseConfig from "../config/firebase.config";
 import { initializeApp } from "firebase/app";
 import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
-import Emoji from "./emoji";
+
+import handleEmojiSelect from "./emoji";
+import EmojiPicker from "emoji-picker-react";
+import { selectUser } from "../features/userSlice";
+import { useSelector } from "react-redux";
 
 function Chatroom() {
   const firebase = initializeApp(firebaseConfig);
   const auth = getAuth(firebase);
   const [inputText, setInputText] = useState("");
+  const user = useSelector(selectUser);
+  console.log(user);
 
   function logOut() {
     signOut(getAuth()).then(console.log("Logged Out"));
@@ -25,6 +31,16 @@ function Chatroom() {
 
   function getUserName() {
     return getAuth().currentUser.displayName;
+  }
+
+  function onAuthStateChange() {
+    onAuthStateChanged(auth, (currentUser) => {
+      if (currentUser) {
+        console.log("User is Active as" + currentUser);
+      } else {
+        console.log("User is inActive");
+      }
+    });
   }
 
   function sendChat() {
@@ -42,6 +58,8 @@ function Chatroom() {
   return (
     <div className="chatroom">
       <div className="profile">
+        {/* <img src={user.photoUrl} /> */}
+
         <AccountCircleIcon className="icons" fontSize="large" />
         <p>Punit Bathija</p>
         <div onClick={logOut}>
@@ -90,7 +108,7 @@ function Chatroom() {
         <AddAPhotoIcon />
         <div>
           <InsertEmoticonIcon />
-          <Emoji />
+          {/* <EmojiPicker value={handleEmojiSelect} /> */}
         </div>
         <input
           type="text"

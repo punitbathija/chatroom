@@ -2,7 +2,7 @@ import React from "react";
 import EmojiPicker from "emoji-picker-react";
 
 function handleEmojiSelect(emoji) {
-  console.log(emoji.emoji);
+  return emoji.emoji;
 }
 
 function Emoji() {
@@ -13,4 +13,4 @@ function Emoji() {
   );
 }
 
-export default Emoji;
+export default handleEmojiSelect;

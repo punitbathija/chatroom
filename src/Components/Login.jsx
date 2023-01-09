@@ -12,6 +12,7 @@ import {
 } from "firebase/auth";
 import { useDispatch } from "react-redux";
 import { login } from "../features/userSlice";
+import { selectUser } from "../features/userSlice";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -19,22 +20,6 @@ function Login() {
   const firebase = initializeApp(firebaseConfig);
   const auth = getAuth(firebase);
   const dispatch = useDispatch();
-
-  // async function login(e) {
-  //   await signInWithEmailAndPassword(auth, email, password)
-  //     .then((userCredentials) => {
-  //       disptach(
-  //         login({
-  //           email: userCredentials.user.email,
-  //           uid: userCredentials.user.uid,
-  //           displayName: userCredentials.user.displayName,
-  //         })
-  //       );
-  //     })
-  //     .catch((error) => {
-  //       console.log(error);
-  //     });
-  // }
 
   const loginToApp = (e) => {
     signInWithEmailAndPassword(auth, email, password).then(
@@ -45,7 +30,7 @@ function Login() {
             uid: userCredentials.user.uid,
           })
         );
-        console.log(userCredentials.user.email);
+        console.log(userCredentials.user);
       }
     );
   };
@@ -58,8 +43,10 @@ function Login() {
           email: userCredentials.user.email,
           uid: userCredentials.user.uid,
           displayName: userCredentials.user.displayName,
+          photoUrl: userCredentials.user.photoURL,
         })
       );
+      console.log(userCredentials.user);
     });
   }
 

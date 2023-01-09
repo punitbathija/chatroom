@@ -29,7 +29,7 @@ function Signup() {
         updateProfile(userCredentials.user, {
           displayName: displayName,
         });
-        console.log(userCredentials.user);
+        console.log("User Signed Up" + userCredentials.user);
       })
       .catch((error) => {
         console.log(error);
@@ -46,7 +46,7 @@ function Signup() {
           displayName: userCredentials.user.displayName,
         })
       );
-      console.log(userCredentials.user);
+      console.log("User Signed Up Using Google" + userCredentials.user);
     });
   }
 
