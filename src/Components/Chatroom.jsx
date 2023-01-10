@@ -8,58 +8,54 @@ import SendIcon from "@mui/icons-material/Send";
 import firebaseConfig from "../config/firebase.config";
 import { initializeApp } from "firebase/app";
 import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
-
 import handleEmojiSelect from "./emoji";
 import EmojiPicker from "emoji-picker-react";
 import { selectUser } from "../features/userSlice";
 import { useSelector } from "react-redux";
+import {
+  getFirestore,
+  collection,
+  addDoc,
+  query,
+  orderBy,
+  limit,
+  onSnapshot,
+  setDoc,
+  updateDoc,
+  doc,
+  serverTimestamp,
+} from "firebase/firestore";
 
 function Chatroom() {
   const firebase = initializeApp(firebaseConfig);
   const auth = getAuth(firebase);
+  const db = getFirestore(firebase);
   const [inputText, setInputText] = useState("");
   const user = useSelector(selectUser);
   console.log(user);
 
-  function logOut() {
-    signOut(getAuth()).then(console.log("Logged Out"));
+  async function
+
+  async function logOut() {
+   await signOut(getAuth()).then(console.log("Logged Out"));
   }
 
-  function getProfilePicUrl() {
-    return getAuth().currentUser.photoURL || <AccountCircleIcon />;
-  }
-
-  function getUserName() {
-    return getAuth().currentUser.displayName;
-  }
-
-  function onAuthStateChange() {
-    onAuthStateChanged(auth, (currentUser) => {
-      if (currentUser) {
-        console.log("User is Active as" + currentUser);
-      } else {
-        console.log("User is inActive");
-      }
-    });
-  }
-
-  function sendChat() {
-    return (
-      <div>
-        <div className="my-contact">
-          <AccountCircleIcon className="icon" fontSize="large" />
-          <p>Punit</p>
-        </div>
-        <p className="my-message">{inputText}</p>
-      </div>
-    );
+  async function sendChat() {
+    try {
+      const docRef = await addDoc(collection(db, "messages"), {
+        name: user.displayName,
+        text: inputText,
+        profilePicture: user.photoUrl,
+        timestamp: serverTimestamp(),
+      });
+    } catch (error) {
+      console.log(error, "Error sending the message");
+    }
   }
 
   return (
     <div className="chatroom">
       <div className="profile">
-        {/* <img src={user.photoUrl} /> */}
-
         <AccountCircleIcon className="icons" fontSize="large" />
         <p>Punit Bathija</p>
         <div onClick={logOut}>
