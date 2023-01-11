@@ -33,6 +33,7 @@ function Chatroom() {
   const [inputText, setInputText] = useState("");
   const [prevText, setPrevText] = useState("");
   const user = useSelector(selectUser);
+  console.log(user);
   const colRef = collection(db, "messages");
   const recentMessages = query(
     collection(db, "messages"),

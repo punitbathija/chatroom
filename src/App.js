@@ -9,6 +9,7 @@ import Home from "./Components/Home";
 import { useDispatch, useSelector } from "react-redux";
 import { login, logout, selectUser } from "./features/userSlice";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
+import Messages from "./Components/Messages";
 
 function App() {
   const firebase = initializeApp(firebaseConfig);
@@ -39,6 +40,7 @@ function App() {
       <Login />
       <Signup />
       <Chatroom />
+      <Messages />
     </div>
   );
 }
