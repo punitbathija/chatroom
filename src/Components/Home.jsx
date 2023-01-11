@@ -5,12 +5,14 @@ import firebaseicon from "../Assets/icons8-firebase.svg";
 import reduxicon from "../Assets/icons8-redux.svg";
 import materialuiicon from "../Assets/icons8-material-ui.svg";
 import logo from "../Assets/logo.svg";
+import hero from "../Assets/girl-chatting-with-friends.svg";
 
 function Home() {
   return (
     <div className="home">
       <div className="top">
         <svg
+          className="logo"
           viewBox="0 0 338 112"
           preserveAspectRatio="xMidYMid meet"
           class="css-g5ufxp"
@@ -59,9 +61,11 @@ function Home() {
             <path d="M2.74 20.12 c-1.52 0 -2.74 -1.24 -2.74 -2.74 l0 -2.18 l1.94 0 l0 2.18 c0 0.44 0.36 0.8 0.8 0.8 s0.78 -0.36 0.78 -0.8 l0 -1.9 l-3.52 -4.86 l0 -2.48 c0 -1.52 1.22 -2.76 2.74 -2.76 c1.5 0 2.72 1.24 2.72 2.76 l0 2.16 l-1.94 0 l0 -2.16 c0 -0.46 -0.34 -0.8 -0.78 -0.8 s-0.8 0.34 -0.8 0.8 l0 1.82 l3.52 4.86 l0 2.56 c0 1.5 -1.22 2.74 -2.72 2.74 z M14.788 5.68 l0 1.92 l-2.38 0 l0 12.42 l-1.92 0 l0 -12.42 l-2.62 0 l0 -1.92 l6.92 0 z M21.636 20 l-0.72 -4.94 l-2.02 0 l-0.66 4.94 l-1.92 0 l2.16 -14.3 l2.58 0 l2.5 14.3 l-1.92 0 z M19.156 13.16 l1.48 0 l-0.76 -5.2 z M33.664 5.720000000000001 l-2.68 8.68 l0 5.6 l-1.94 0 l0 -5.62 l-2.46 -8.66 l2 0 l1.46 5.14 l1.6 -5.14 l2.02 0 z M45.66 20.04 c-1.62 0 -2.94 -1.32 -2.94 -2.94 l0 -11.36 l1.9 0 l0 11.36 c0 0.58 0.46 1.06 1.04 1.06 s1.04 -0.48 1.04 -1.06 l0 -11.36 l1.9 0 l0 11.36 c0 1.62 -1.32 2.94 -2.94 2.94 z M53.528 17 l0 2.98 l-1.9 0 l0 -14.26 l2.96 0 c1.32 0 2.38 1.08 2.38 2.4 l0 6.5 c0 1.32 -1.06 2.38 -2.38 2.38 l-1.06 0 z M53.528 7.619999999999999 l0 7.48 l1.06 0 c0.28 0 0.48 -0.2 0.48 -0.48 l0 -6.5 c0 -0.28 -0.2 -0.5 -0.48 -0.5 l-1.06 0 z M62.496 20.02 l-2.5 0 l0 -14.26 l2.5 0 c1.7 0 3.06 1.38 3.06 3.08 l0 8.1 c0 0.82 -0.32 1.6 -0.9 2.18 s-1.34 0.9 -2.16 0.9 z M61.896 7.68 l0 10.42 l0.6 0 c0.3 0 0.6 -0.12 0.82 -0.34 s0.34 -0.5 0.34 -0.82 l0 -8.1 c0 -0.64 -0.52 -1.16 -1.16 -1.16 l-0.6 0 z M73.28399999999999 20 l-0.72 -4.94 l-2.02 0 l-0.66 4.94 l-1.92 0 l2.16 -14.3 l2.58 0 l2.5 14.3 l-1.92 0 z M70.804 13.16 l1.48 0 l-0.76 -5.2 z M83.132 5.68 l0 1.92 l-2.38 0 l0 12.42 l-1.92 0 l0 -12.42 l-2.62 0 l0 -1.92 l6.92 0 z M90.82 12.46 l-2.76 0 l0 5.64 l2.78 0 l0 1.9 l-4.68 0 l0 -14.28 l4.68 0 l0 1.9 l-2.78 0 l0 2.94 l2.76 0 l0 1.9 z M96.368 20.02 l-2.5 0 l0 -14.26 l2.5 0 c1.7 0 3.06 1.38 3.06 3.08 l0 8.1 c0 0.82 -0.32 1.6 -0.9 2.18 s-1.34 0.9 -2.16 0.9 z M95.768 7.68 l0 10.42 l0.6 0 c0.3 0 0.6 -0.12 0.82 -0.34 s0.34 -0.5 0.34 -0.82 l0 -8.1 c0 -0.64 -0.52 -1.16 -1.16 -1.16 l-0.6 0 z"></path>
           </g>
         </svg>
-        <h1>Chat Box</h1>
-        <p>Login</p>
-        <p>Signup</p>
+        <div className="end">
+          <p>Login</p>
+          <p>||</p>
+          <p>Signup</p>
+        </div>
       </div>
       <div className="hero">
         <div className="left">
@@ -79,10 +83,7 @@ function Home() {
           </p>
         </div>
         <div className="right">
-          <img
-            src="https://cdn3.vectorstock.com/i/1000x1000/12/22/people-internet-globe-world-connected-vector-23631222.jpg"
-            className="img"
-          />
+          <img src={hero} className="img" />
         </div>
       </div>
     </div>

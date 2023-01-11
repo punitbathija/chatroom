@@ -31,3 +31,7 @@ h1{
 .hero{
     display: flex;
 }
+
+.logo{
+    width: 500px;
+}

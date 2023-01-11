@@ -36,8 +36,12 @@
     justify-content: center;
     align-items: center;
     align-self: center;
-    padding: 4%;
-    max-height: 70%;
+    padding: 2%;
+    min-height: 70%;
+    max-height: 90%;
+    margin-top: -20px; 
+    overflow-x: hidden;
+    scroll-behavior: smooth;
 }
 
 .contact{
@@ -50,7 +54,7 @@
 .message{
     text-align: start;
     border: none;
-    background-color: red;
+    background-color:#f44336;
     color: white;
     padding: 10px;
     border-radius: 2px 20px 20px 20px;

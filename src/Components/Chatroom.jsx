@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./Chatroom.css";
 import AddAPhotoIcon from "@mui/icons-material/AddAPhoto";
 import InsertEmoticonIcon from "@mui/icons-material/InsertEmoticon";
@@ -31,13 +31,33 @@ function Chatroom() {
   const auth = getAuth(firebase);
   const db = getFirestore(firebase);
   const [inputText, setInputText] = useState("");
+  const [prevText, setPrevText] = useState("");
   const user = useSelector(selectUser);
-  console.log(user);
+  const colRef = collection(db, "messages");
+  const recentMessages = query(
+    collection(db, "messages"),
+    orderBy("timestamp", "desc"),
+    limit(40)
+  );
 
-  async function
+  async function displayMessages() {
+    const dbData = await onSnapshot(recentMessages, colRef, (snapshot) => {
+      setPrevText(
+        snapshot.docs.map((doc) => ({
+          id: doc.id,
+          data: doc.data(),
+        }))
+      );
+      console.log(prevText);
+    });
+  }
+
+  async function deleteMessage() {
+    console.log("hello");
+  }
 
   async function logOut() {
-   await signOut(getAuth()).then(console.log("Logged Out"));
+    await signOut(getAuth()).then(console.log("Logged Out"));
   }
 
   async function sendChat() {
@@ -51,6 +71,7 @@ function Chatroom() {
     } catch (error) {
       console.log(error, "Error sending the message");
     }
+    setInputText("");
   }
 
   return (
