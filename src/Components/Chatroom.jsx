@@ -80,7 +80,7 @@ const Chatroom = () => {
     <div className="chatroom">
       <div className="profile">
         <AccountCircleIcon className="icons" fontSize="large" />
-        <p>Punit Bathija</p>
+        {/* <p>{user.displayName}</p> */}
         <div onClick={logOut}>
           <LogoutIcon className="icons" fontSize="large" />
         </div>

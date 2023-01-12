@@ -17,14 +17,14 @@
 
 
 .my-contact{
+    /* padding: 12px; */
     margin-top: 2px;
     display: flex;
     gap: 5px;
-    align-items: center;
+    align-items: flex-start;
     font-weight: 500;
     font-size: 12px;
     justify-content: flex-start;
     padding-bottom: 2px;
-    margin-left: -26px;
 }
 
