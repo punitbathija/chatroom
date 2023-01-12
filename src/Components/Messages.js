@@ -10,13 +10,17 @@ const Message = forwardRef(
     const user = useSelector(selectUser);
 
     return (
-      <div ref={ref} className="message">
-        <Avatar src={photoUrl} className="my-contact"></Avatar>
-        <div className="textBody">
-          <p>{displayName}</p>
-          <p>{text}</p>
+      <>
+        <div ref={ref} className="message">
+          <div className="my-contact">
+            <Avatar src={photoUrl}></Avatar>
+            <p>{user.displayName}</p>
+          </div>
+          <div className="textBody">
+            <p>{text}</p>
+          </div>
         </div>
-      </div>
+      </>
     );
   }
 );

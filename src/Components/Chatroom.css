@@ -44,42 +44,6 @@
     scroll-behavior: smooth;
 }
 
-.contact{
-    display: flex;
-    align-items: center;
-    font-weight: 500;
-    font-size: 20px;
-}
-
-.message{
-    text-align: start;
-    border: none;
-    background-color:#f44336;
-    color: white;
-    padding: 10px;
-    border-radius: 2px 20px 20px 20px;
-    font-size: 16px;
-    margin-top: -10px;
-}
-
-.my-contact{
-    display: flex;
-    align-items: center;
-    font-weight: 500;
-    font-size: 20px;
-    justify-content: flex-end;
-}
-
-.my-message{
-    text-align: start;
-    border: none;
-    background-color: #1b1a1a;
-    color: white;
-    padding: 10px;
-    border-radius: 20px 2px 20px 20px;
-    font-size: 16px;
-    margin-top: -10px;
-}
 
 .text-input{
     min-height: 30px;

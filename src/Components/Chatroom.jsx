@@ -38,8 +38,8 @@ const Chatroom = () => {
 
   const recentMessages = query(
     collection(db, "messages"),
-    orderBy("timestamp", "desc"),
-    limit(40)
+    orderBy("timestamp"),
+    limit(2000)
   );
 
   const user = useSelector(selectUser);
@@ -92,7 +92,7 @@ const Chatroom = () => {
               key={id}
               displayName={displayName}
               email={email}
-              text={inptutText}
+              text={text}
               photoUrl={photoUrl}
             />
           )
