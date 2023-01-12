@@ -40,7 +40,6 @@ function App() {
       <Login />
       <Signup />
       <Chatroom />
-      <Messages />
     </div>
   );
 }

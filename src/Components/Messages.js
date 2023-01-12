@@ -8,15 +8,14 @@ import { Avatar } from "@mui/material";
 const Message = forwardRef(
   ({ displayName, email, photoUrl, text, timestamp }, ref) => {
     const user = useSelector(selectUser);
+
     return (
       <div ref={ref} className="message">
-        <div className="contact">
-          {photoUrl && <Avatar src={photoUrl} />}
+        <Avatar src={photoUrl} className="my-contact"></Avatar>
+        <div className="textBody">
           <p>{displayName}</p>
-          <small>{email}</small>
+          <p>{text}</p>
         </div>
-        <p className="message">{text}</p>
-        <small>{timestamp}</small>
       </div>
     );
   }

@@ -7,9 +7,7 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import SendIcon from "@mui/icons-material/Send";
 import firebaseConfig from "../config/firebase.config";
 import { initializeApp } from "firebase/app";
-import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
-import handleEmojiSelect from "./emoji";
-import EmojiPicker from "emoji-picker-react";
+import { getAuth, signOut } from "firebase/auth";
 import { selectUser } from "../features/userSlice";
 import { useSelector } from "react-redux";
 import FlipMove from "react-flip-move";
@@ -28,34 +26,24 @@ import {
 } from "firebase/firestore";
 import Message from "./Messages";
 
+const firebase = initializeApp(firebaseConfig);
+const db = getFirestore(firebase);
+const auth = getAuth(firebase);
+
 const Chatroom = () => {
-  const firebase = initializeApp(firebaseConfig);
-  const auth = getAuth(firebase);
-  const db = getFirestore(firebase);
   const [messages, setMessages] = useState([]);
   const [inptutText, setInputText] = useState("");
-  // const [prevText, setPrevText] = useState("");
 
   const colRef = collection(db, "messages");
+
   const recentMessages = query(
     collection(db, "messages"),
     orderBy("timestamp", "desc"),
     limit(40)
   );
+
   const user = useSelector(selectUser);
   console.log(user);
-
-  // async function displayMessages() {
-  //   const dbData = await onSnapshot(recentMessages, colRef, (snapshot) => {
-  //     setMessages(
-  //       snapshot.docs.map((doc) => ({
-  //         id: doc.id,
-  //         data: doc.data(),
-  //       }))
-  //     );
-  //     console.log(messages);
-  //   });
-  // }
 
   useEffect(() => {
     const dbData = onSnapshot(recentMessages, colRef, (snapshot) => {
@@ -65,16 +53,9 @@ const Chatroom = () => {
           data: doc.data(),
         }))
       );
+      console.log(messages);
     });
   }, []);
-
-  // async function deleteMessage() {
-  //   console.log("hello");
-  // }
-
-  async function logOut() {
-    await signOut(getAuth()).then(console.log("Logged Out"));
-  }
 
   async function sendChat(e) {
     e.preventDefault();
@@ -89,6 +70,10 @@ const Chatroom = () => {
       console.log(error, "Error sending the message");
     }
     setInputText("");
+  }
+
+  async function logOut() {
+    await signOut(getAuth()).then(console.log("Logged Out"));
   }
 
   return (
@@ -107,49 +92,11 @@ const Chatroom = () => {
               key={id}
               displayName={displayName}
               email={email}
+              text={inptutText}
               photoUrl={photoUrl}
-              text={text}
-              timestamp={timestamp}
             />
           )
         )}
-        {/* <div className="contact">
-          <AccountCircleIcon className="icon" fontSize="large" />
-          <p>Chetan</p>
-        </div>
-        <p className="message">
-          This a test message and this chatroom is litt!
-        </p> */}
-
-        {/* <div className="contact">
-          <AccountCircleIcon className="icon" fontSize="large" />
-          <p>Chetan</p>
-        </div>
-        <p className="message">
-          This a test message and this chatroom is litt!
-        </p>
-        <div className="contact">
-          <AccountCircleIcon className="icon" fontSize="large" />
-          <p>Chetan</p>
-        </div>
-        <p className="message">
-          This a test message and this chatroom is litt!
-        </p>
-        <div className="my-contact">
-          <AccountCircleIcon className="icon" fontSize="large" />
-          <p>Punit</p>
-        </div>
-        <p className="my-message">This is also a test message</p>
-        <div className="my-contact">
-          <AccountCircleIcon className="icon" fontSize="large" />
-          <p>Punit</p>
-        </div>
-        <p className="my-message">This is also a test message</p>
-        <div className="my-contact">
-          <AccountCircleIcon className="icon" fontSize="large" />
-          <p>Punit</p>
-        </div>
-        <p className="my-message">This is also a test message</p> */}
       </div>
       <div className="input">
         <AddAPhotoIcon />
