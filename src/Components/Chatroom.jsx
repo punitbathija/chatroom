@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "./Chatroom.css";
 import AddAPhotoIcon from "@mui/icons-material/AddAPhoto";
 import InsertEmoticonIcon from "@mui/icons-material/InsertEmoticon";
@@ -12,6 +12,7 @@ import handleEmojiSelect from "./emoji";
 import EmojiPicker from "emoji-picker-react";
 import { selectUser } from "../features/userSlice";
 import { useSelector } from "react-redux";
+import FlipMove from "react-flip-move";
 import {
   getFirestore,
   collection,
@@ -25,48 +26,63 @@ import {
   doc,
   serverTimestamp,
 } from "firebase/firestore";
+import Message from "./Messages";
 
-function Chatroom() {
+const Chatroom = () => {
   const firebase = initializeApp(firebaseConfig);
   const auth = getAuth(firebase);
   const db = getFirestore(firebase);
-  const [inputText, setInputText] = useState("");
-  const [prevText, setPrevText] = useState("");
-  const user = useSelector(selectUser);
-  console.log(user);
+  const [messages, setMessages] = useState([]);
+  const [inptutText, setInputText] = useState("");
+  // const [prevText, setPrevText] = useState("");
+
   const colRef = collection(db, "messages");
   const recentMessages = query(
     collection(db, "messages"),
     orderBy("timestamp", "desc"),
     limit(40)
   );
+  const user = useSelector(selectUser);
+  console.log(user);
 
-  async function displayMessages() {
-    const dbData = await onSnapshot(recentMessages, colRef, (snapshot) => {
-      setPrevText(
+  // async function displayMessages() {
+  //   const dbData = await onSnapshot(recentMessages, colRef, (snapshot) => {
+  //     setMessages(
+  //       snapshot.docs.map((doc) => ({
+  //         id: doc.id,
+  //         data: doc.data(),
+  //       }))
+  //     );
+  //     console.log(messages);
+  //   });
+  // }
+
+  useEffect(() => {
+    const dbData = onSnapshot(recentMessages, colRef, (snapshot) => {
+      setMessages(
         snapshot.docs.map((doc) => ({
           id: doc.id,
           data: doc.data(),
         }))
       );
-      console.log(prevText);
     });
-  }
+  }, []);
 
-  async function deleteMessage() {
-    console.log("hello");
-  }
+  // async function deleteMessage() {
+  //   console.log("hello");
+  // }
 
   async function logOut() {
     await signOut(getAuth()).then(console.log("Logged Out"));
   }
 
-  async function sendChat() {
+  async function sendChat(e) {
+    e.preventDefault();
     try {
       const docRef = await addDoc(collection(db, "messages"), {
         name: user.displayName,
-        text: inputText,
-        profilePicture: user.photoUrl,
+        text: inptutText,
+        profilePicture: user.photoUrl || "",
         timestamp: serverTimestamp(),
       });
     } catch (error) {
@@ -85,14 +101,27 @@ function Chatroom() {
         </div>
       </div>
       <div className="chats">
-        <div className="contact">
+        {messages.map(
+          ({ id, data: { displayName, email, photoUrl, text, timestamp } }) => (
+            <Message
+              key={id}
+              displayName={displayName}
+              email={email}
+              photoUrl={photoUrl}
+              text={text}
+              timestamp={timestamp}
+            />
+          )
+        )}
+        {/* <div className="contact">
           <AccountCircleIcon className="icon" fontSize="large" />
           <p>Chetan</p>
         </div>
         <p className="message">
           This a test message and this chatroom is litt!
-        </p>
-        <div className="contact">
+        </p> */}
+
+        {/* <div className="contact">
           <AccountCircleIcon className="icon" fontSize="large" />
           <p>Chetan</p>
         </div>
@@ -120,7 +149,7 @@ function Chatroom() {
           <AccountCircleIcon className="icon" fontSize="large" />
           <p>Punit</p>
         </div>
-        <p className="my-message">This is also a test message</p>
+        <p className="my-message">This is also a test message</p> */}
       </div>
       <div className="input">
         <AddAPhotoIcon />
@@ -131,15 +160,15 @@ function Chatroom() {
         <input
           type="text"
           className="text-input"
-          value={inputText}
+          value={inptutText}
           onChange={(e) => setInputText(e.target.value)}
         />
-        <div onClick={sendChat}>
+        <div onClick={sendChat} type="submit">
           <SendIcon />
         </div>
       </div>
     </div>
   );
-}
+};
 
 export default Chatroom;
