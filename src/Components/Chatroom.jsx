@@ -80,7 +80,7 @@ const Chatroom = () => {
     <div className="chatroom">
       <div className="profile">
         <AccountCircleIcon className="icons" fontSize="large" />
-        {/* <p>{user.displayName}</p> */}
+        <p>{user.displayName}</p>
         <div onClick={logOut}>
           <LogoutIcon className="icons" fontSize="large" />
         </div>
@@ -104,15 +104,17 @@ const Chatroom = () => {
           <InsertEmoticonIcon />
           {/* <EmojiPicker value={handleEmojiSelect} /> */}
         </div>
-        <input
-          type="text"
-          className="text-input"
-          value={inptutText}
-          onChange={(e) => setInputText(e.target.value)}
-        />
-        <div onClick={sendChat} type="submit">
-          <SendIcon />
-        </div>
+        <form onSubmit={sendChat} className="sendChat">
+          <input
+            type="text"
+            className="text-input"
+            value={inptutText}
+            onChange={(e) => setInputText(e.target.value)}
+          />
+          <button type="submit">
+            <SendIcon />
+          </button>
+        </form>
       </div>
     </div>
   );
