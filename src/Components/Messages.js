@@ -14,7 +14,7 @@ const Message = forwardRef(
         <div ref={ref} className="message">
           <div className="my-contact">
             <Avatar src={photoUrl}></Avatar>
-            {/* <p>{user.displayName}</p> */}
+            <p>{user.displayName}</p>
           </div>
           <div className="textBody">
             <p>{text}</p>

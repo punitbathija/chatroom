@@ -35,11 +35,14 @@ function App() {
   }, []);
 
   return (
-    <div className="App">
-      {/* <Home /> */}
-      <Login />
-      <Signup />
-      <Chatroom />
+    <div className="app">
+      {!user ? (
+        <Login />
+      ) : (
+        <div className="app_body">
+          <Chatroom />
+        </div>
+      )}
     </div>
   );
 }
