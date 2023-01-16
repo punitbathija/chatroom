@@ -90,13 +90,16 @@ const Chatroom = () => {
       <div className="chats">
         <FlipMove>
           {messages.map(
-            ({ id, data: { name, email, photoUrl, text, timestamp } }) => (
+            ({
+              id,
+              data: { name, email, profilePicture, text, timestamp },
+            }) => (
               <Message
                 key={id}
                 displayName={name}
                 email={email}
                 text={text}
-                photoUrl={photoUrl}
+                profilePicture={profilePicture}
               />
             )
           )}

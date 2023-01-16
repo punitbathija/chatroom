@@ -14,13 +14,13 @@ const firebase = initializeApp(firebaseConfig);
 const auth = getAuth(firebase);
 
 const Message = forwardRef(
-  ({ displayName, email, photoUrl, text, timestamp }, ref) => {
+  ({ displayName, email, profilePicture, text, timestamp }, ref) => {
     const user = useSelector(selectUser);
     return (
       <>
         <div ref={ref} className="message">
           <div className="my-contact">
-            <Avatar src={getAuth().photoUrl}></Avatar>
+            <Avatar src={profilePicture}>{displayName[0]}</Avatar>
             <p>{displayName}</p>
           </div>
           <div className="textBody">
