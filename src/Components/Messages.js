@@ -16,18 +16,16 @@ const auth = getAuth(firebase);
 const Message = forwardRef(
   ({ displayName, email, photoUrl, text, timestamp }, ref) => {
     const user = useSelector(selectUser);
-
     return (
       <>
         <div ref={ref} className="message">
           <div className="my-contact">
-            <Avatar src={getAuth().currentUser.photoURL}></Avatar>
-            <p>{getAuth().currentUser.displayName}</p>
+            <Avatar src={getAuth().photoUrl}></Avatar>
+            <p>{displayName}</p>
           </div>
           <div className="textBody">
             <p>{text}</p>
           </div>
-          {/* <p>{console.log(getAuth().currentUser.timestamp)}</p> */}
         </div>
       </>
     );

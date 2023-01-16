@@ -25,6 +25,7 @@ import {
   serverTimestamp,
 } from "firebase/firestore";
 import Message from "./Messages";
+import moment from "moment";
 
 const firebase = initializeApp(firebaseConfig);
 const db = getFirestore(firebase);
@@ -62,12 +63,11 @@ const Chatroom = () => {
     e.preventDefault();
     try {
       const docRef = await addDoc(collection(db, "messages"), {
-        name: getAuth().currentUser.displayName,
+        name: user.displayName,
         text: inptutText,
-        profilePicture: getAuth().currentUser.photoURL || "",
+        profilePicture: user.photoURL || "",
         timestamp: serverTimestamp(),
       });
-      console.log(docRef);
     } catch (error) {
       console.log(error, "Error sending the message");
     }
@@ -90,13 +90,10 @@ const Chatroom = () => {
       <div className="chats">
         <FlipMove>
           {messages.map(
-            ({
-              id,
-              data: { displayName, email, photoUrl, text, timestamp },
-            }) => (
+            ({ id, data: { name, email, photoUrl, text, timestamp } }) => (
               <Message
                 key={id}
-                displayName={displayName}
+                displayName={name}
                 email={email}
                 text={text}
                 photoUrl={photoUrl}
