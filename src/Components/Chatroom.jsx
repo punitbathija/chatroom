@@ -36,6 +36,8 @@ const Chatroom = () => {
 
   const colRef = collection(db, "messages");
 
+  console.log(messages);
+
   const recentMessages = query(
     collection(db, "messages"),
     orderBy("timestamp"),
@@ -53,7 +55,6 @@ const Chatroom = () => {
           data: doc.data(),
         }))
       );
-      console.log(messages);
     });
   }, []);
 
@@ -61,11 +62,12 @@ const Chatroom = () => {
     e.preventDefault();
     try {
       const docRef = await addDoc(collection(db, "messages"), {
-        name: user.displayName,
+        name: getAuth().currentUser.displayName,
         text: inptutText,
-        profilePicture: user.photoUrl || "",
+        profilePicture: getAuth().currentUser.photoURL || "",
         timestamp: serverTimestamp(),
       });
+      console.log(docRef);
     } catch (error) {
       console.log(error, "Error sending the message");
     }
@@ -86,18 +88,24 @@ const Chatroom = () => {
         </div>
       </div>
       <div className="chats">
-        {messages.map(
-          ({ id, data: { displayName, email, photoUrl, text, timestamp } }) => (
-            <Message
-              key={id}
-              displayName={displayName}
-              email={email}
-              text={text}
-              photoUrl={photoUrl}
-            />
-          )
-        )}
+        <FlipMove>
+          {messages.map(
+            ({
+              id,
+              data: { displayName, email, photoUrl, text, timestamp },
+            }) => (
+              <Message
+                key={id}
+                displayName={displayName}
+                email={email}
+                text={text}
+                photoUrl={photoUrl}
+              />
+            )
+          )}
+        </FlipMove>
       </div>
+
       <div className="input">
         <AddAPhotoIcon />
         <div>
