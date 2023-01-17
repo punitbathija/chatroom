@@ -28,3 +28,12 @@
     padding-bottom: 2px;
 }
 
+
+.time{
+    display: flex;
+    float: right;
+    font-size: 9px;
+    margin-right: 12px;
+    font-weight: 300;
+    font-family: cursive;
+}

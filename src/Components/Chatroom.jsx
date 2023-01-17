@@ -11,6 +11,7 @@ import { getAuth, signOut } from "firebase/auth";
 import { selectUser } from "../features/userSlice";
 import { useSelector } from "react-redux";
 import FlipMove from "react-flip-move";
+import { Avatar } from "@mui/material";
 import {
   getFirestore,
   collection,
@@ -85,7 +86,10 @@ const Chatroom = () => {
   return (
     <div className="chatroom">
       <div className="profile">
-        <AccountCircleIcon className="icons" fontSize="large" />
+        <Avatar src={user.photoUrl} className="icons">
+          {user.displayName[0]}
+        </Avatar>
+
         <p>{user.displayName}</p>
         <div onClick={logOut}>
           <LogoutIcon className="icons" fontSize="large" />
@@ -105,6 +109,7 @@ const Chatroom = () => {
                 text={text}
                 profilePicture={profilePicture}
                 photoURL={photoURL}
+                timestamp={timestamp}
               />
             )
           )}
@@ -116,7 +121,6 @@ const Chatroom = () => {
         <AddAPhotoIcon />
         <div>
           <InsertEmoticonIcon />
-          {/* <EmojiPicker value={handleEmojiSelect} /> */}
         </div>
         <form onSubmit={sendChat} className="sendChat">
           <input
