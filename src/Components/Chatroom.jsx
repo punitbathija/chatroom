@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./Chatroom.css";
 import AddAPhotoIcon from "@mui/icons-material/AddAPhoto";
 import InsertEmoticonIcon from "@mui/icons-material/InsertEmoticon";
@@ -34,8 +34,8 @@ const auth = getAuth(firebase);
 const Chatroom = () => {
   const [messages, setMessages] = useState([]);
   const [inptutText, setInputText] = useState("");
-
   const colRef = collection(db, "messages");
+  const messagesBottom = useRef(null);
 
   console.log(messages);
 
@@ -65,7 +65,7 @@ const Chatroom = () => {
       const docRef = await addDoc(collection(db, "messages"), {
         name: user.displayName,
         text: inptutText,
-        profilePicture: user.photoURL || "",
+        profilePicture: user.photoUrl || "",
         timestamp: serverTimestamp(),
       });
     } catch (error) {
@@ -77,6 +77,10 @@ const Chatroom = () => {
   async function logOut() {
     await signOut(getAuth()).then(console.log("Logged Out"));
   }
+
+  useEffect(() => {
+    messagesBottom.current?.scrollIntoView();
+  }, [messages, db]);
 
   return (
     <div className="chatroom">
@@ -92,7 +96,7 @@ const Chatroom = () => {
           {messages.map(
             ({
               id,
-              data: { name, email, profilePicture, text, timestamp },
+              data: { name, email, profilePicture, text, timestamp, photoURL },
             }) => (
               <Message
                 key={id}
@@ -100,10 +104,12 @@ const Chatroom = () => {
                 email={email}
                 text={text}
                 profilePicture={profilePicture}
+                photoURL={photoURL}
               />
             )
           )}
         </FlipMove>
+        <div ref={messagesBottom} />
       </div>
 
       <div className="input">
