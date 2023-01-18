@@ -16,7 +16,10 @@ const auth = getAuth(firebase);
 const Message = forwardRef(
   ({ displayName, email, profilePicture, text, timestamp }, ref) => {
     const user = useSelector(selectUser);
-    const momemtTimestamp = moment(timestamp.toDate());
+    // const clearDate = timestamp.toDate().toString();
+    // const momemtTimestamp = moment(timestamp.toDate());
+    var date = moment(timestamp.toDate()).format("dddd, hh:mm");
+
     return (
       <>
         <div ref={ref} className="message">
@@ -26,9 +29,7 @@ const Message = forwardRef(
           </div>
           <div className="textBody">
             <p>{text}</p>
-            <small className="time">
-              {momemtTimestamp.format("dddd, hh:mm")}
-            </small>
+            <small className="time">{date}</small>
           </div>
         </div>
       </>
