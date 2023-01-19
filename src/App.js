@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "./App.css";
 import Login from "./Components/Login";
 import Signup from "./Components/Signup";
@@ -10,12 +10,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { login, logout, selectUser } from "./features/userSlice";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import Messages from "./Components/Messages";
+import spinner from "./Assets/spinner.svg";
 
 function App() {
   const firebase = initializeApp(firebaseConfig);
   const auth = getAuth(firebase);
   const dispatch = useDispatch();
   const user = useSelector(selectUser);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     onAuthStateChanged(auth, (userAuth) => {
@@ -34,13 +36,17 @@ function App() {
     });
   }, []);
 
+  useEffect(() => {
+    if ((<Chatroom />)) setIsLoading(false);
+  }, []);
+
   return (
     <div className="app">
       {!user ? (
         <Login />
       ) : (
         <div className="app_body">
-          <Chatroom />
+          {isLoading ? <img src={spinner} className="spinner" /> : <Chatroom />}
         </div>
       )}
     </div>

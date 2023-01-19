@@ -9,6 +9,7 @@ import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 import firebaseConfig from "../config/firebase.config";
 import { doc } from "firebase/firestore";
+import spinner from "../Assets/spinner.svg";
 
 const firebase = initializeApp(firebaseConfig);
 const auth = getAuth(firebase);
@@ -24,12 +25,13 @@ const Message = forwardRef(
     }, [timestamp]);
 
     if (isLoading) {
-      return (time = <small>Loading...</small>);
+      return (time = <img src={spinner} className="spinner" />);
     } else {
       time = (
         <small className="time">{moment(date).format("dddd, hh:mm")}</small>
       );
     }
+
     return (
       <>
         <div ref={ref} className="message">
