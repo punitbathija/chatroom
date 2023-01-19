@@ -27,6 +27,7 @@ import {
 } from "firebase/firestore";
 import Message from "./Messages";
 import moment from "moment";
+import { ArrowDownwardRounded } from "@mui/icons-material";
 
 const firebase = initializeApp(firebaseConfig);
 const db = getFirestore(firebase);
@@ -81,7 +82,11 @@ const Chatroom = () => {
 
   useEffect(() => {
     messagesBottom.current?.scrollIntoView();
-  }, [messages, db]);
+  }, [(db, messages, inptutText)]);
+
+  const scrollToBottom = () => {
+    messagesBottom.current?.scrollIntoView();
+  };
 
   return (
     <div className="chatroom">
@@ -118,6 +123,7 @@ const Chatroom = () => {
       </div>
 
       <div className="input">
+        <ArrowDownwardRounded onClick={scrollToBottom} />
         <AddAPhotoIcon />
         <div>
           <InsertEmoticonIcon />
