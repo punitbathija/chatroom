@@ -1,4 +1,4 @@
-import React, { forwardRef } from "react";
+import React, { forwardRef, useState, useEffect } from "react";
 import "./Messages.css";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { useSelector } from "react-redux";
@@ -12,14 +12,24 @@ import { doc } from "firebase/firestore";
 
 const firebase = initializeApp(firebaseConfig);
 const auth = getAuth(firebase);
-
 const Message = forwardRef(
   ({ displayName, email, profilePicture, text, timestamp }, ref) => {
     const user = useSelector(selectUser);
-    // const clearDate = timestamp.toDate().toString();
-    // const momemtTimestamp = moment(timestamp.toDate());
-    var date = moment(timestamp.toDate()).format("dddd, hh:mm");
+    const date = timestamp ? timestamp.toDate() : null;
+    const [isLoading, setIsLoading] = useState(true);
+    let time;
 
+    useEffect(() => {
+      if (timestamp) setIsLoading(false);
+    }, [timestamp]);
+
+    if (isLoading) {
+      return (time = <small>Loading...</small>);
+    } else {
+      time = (
+        <small className="time">{moment(date).format("dddd, hh:mm")}</small>
+      );
+    }
     return (
       <>
         <div ref={ref} className="message">
@@ -29,7 +39,7 @@ const Message = forwardRef(
           </div>
           <div className="textBody">
             <p>{text}</p>
-            <small className="time">{date}</small>
+            <small>{time}</small>
           </div>
         </div>
       </>
