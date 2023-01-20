@@ -28,14 +28,23 @@ import {
 import Message from "./Messages";
 import moment from "moment";
 import { ArrowDownwardRounded } from "@mui/icons-material";
+import spinner from "../Assets/spinner.svg";
+import {
+  getStorage,
+  ref,
+  uploadBytesResumable,
+  getDownloadURL,
+} from "firebase/storage";
 
 const firebase = initializeApp(firebaseConfig);
 const db = getFirestore(firebase);
 const auth = getAuth(firebase);
+const storage = getStorage(firebase);
 
 const Chatroom = () => {
   const [messages, setMessages] = useState([]);
   const [inptutText, setInputText] = useState("");
+  const [imageUpload, setImageUpload] = useState(null);
   const colRef = collection(db, "messages");
   const messagesBottom = useRef(null);
 
@@ -76,6 +85,32 @@ const Chatroom = () => {
     setInputText("");
   }
 
+  const saveImageMessage = async (file) => {
+    try {
+      const messageRef = await addDoc(collection(db, "messages"), {
+        name: user.displayName,
+        imageUrl: spinner,
+        profilePicture: user.photoURL || "",
+        timestamp: serverTimestamp(),
+      });
+
+      const filePath = `${getAuth().currentUser.uid}/${messageRef.id}/${
+        file.name
+      }`;
+      const newImageRef = ref(getStorage(), filePath);
+      const fileSnapshot = await uploadBytesResumable(newImageRef, file);
+
+      const publicImageUrl = await getDownloadURL(newImageRef);
+
+      await updateDoc(messageRef, {
+        imageUrl: publicImageUrl,
+        storageUri: fileSnapshot.metadata.fullPath,
+      });
+    } catch (error) {
+      console.log(error, "Error sending the message");
+    }
+  };
+
   async function logOut() {
     await signOut(getAuth()).then(console.log("Logged Out"));
   }
@@ -88,6 +123,9 @@ const Chatroom = () => {
     messagesBottom.current?.scrollIntoView();
   };
 
+  function uploadImage() {
+    if (imageUpload == null) return;
+  }
   return (
     <div className="chatroom">
       <div className="profile">
@@ -124,7 +162,17 @@ const Chatroom = () => {
 
       <div className="input">
         <ArrowDownwardRounded onClick={scrollToBottom} />
-        <AddAPhotoIcon />
+        <div className="imgUpload" onClick={uploadImage}>
+          <input
+            type="file"
+            accept="image/*"
+            className="imageInput"
+            onChange={(e) => {
+              setImageUpload(e.target.files[0]);
+            }}
+          />
+          <AddAPhotoIcon />
+        </div>
         <div>
           <InsertEmoticonIcon />
         </div>
