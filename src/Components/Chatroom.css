@@ -97,3 +97,10 @@
 .text-input ::-webkit-textfield-decoration-container{
     border: none;
 }
+
+
+.imageInput{
+    display: flex;
+    width: 10px;
+    height: 10px;
+}

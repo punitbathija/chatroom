@@ -49,7 +49,7 @@ const Chatroom = () => {
   const messagesBottom = useRef(null);
 
   console.log(messages);
-
+  console.log(imageUpload);
   const recentMessages = query(
     collection(db, "messages"),
     orderBy("timestamp"),
@@ -85,7 +85,22 @@ const Chatroom = () => {
     setInputText("");
   }
 
-  const saveImageMessage = async (file) => {
+  const saveImageMessage = async (file) => {};
+
+  async function logOut() {
+    await signOut(getAuth()).then(console.log("Logged Out"));
+  }
+
+  useEffect(() => {
+    messagesBottom.current?.scrollIntoView();
+  }, [(db, messages, inptutText)]);
+
+  const scrollToBottom = () => {
+    messagesBottom.current?.scrollIntoView();
+  };
+
+  async function uploadImage(file) {
+    if (imageUpload == null) return;
     try {
       const messageRef = await addDoc(collection(db, "messages"), {
         name: user.displayName,
@@ -109,22 +124,6 @@ const Chatroom = () => {
     } catch (error) {
       console.log(error, "Error sending the message");
     }
-  };
-
-  async function logOut() {
-    await signOut(getAuth()).then(console.log("Logged Out"));
-  }
-
-  useEffect(() => {
-    messagesBottom.current?.scrollIntoView();
-  }, [(db, messages, inptutText)]);
-
-  const scrollToBottom = () => {
-    messagesBottom.current?.scrollIntoView();
-  };
-
-  function uploadImage() {
-    if (imageUpload == null) return;
   }
   return (
     <div className="chatroom">
