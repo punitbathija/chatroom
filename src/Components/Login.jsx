@@ -13,6 +13,8 @@ import {
 import { useDispatch } from "react-redux";
 import { login } from "../features/userSlice";
 import { selectUser } from "../features/userSlice";
+import Cookies from "universal-cookie";
+const cookies = new Cookies();
 
 function Login() {
   const [email, setEmail] = useState("");
