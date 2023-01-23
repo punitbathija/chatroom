@@ -70,8 +70,17 @@ const Chatroom = () => {
     });
   }, []);
 
+  useEffect(() => {
+    messagesBottom.current.scrollIntoView();
+  }, [(db, messages, inptutText, user)]);
+
+  const scrollToBottom = () => {
+    messagesBottom.current?.scrollIntoView();
+  };
+
   async function sendChat(e) {
     e.preventDefault();
+    if (inptutText === "") return;
     try {
       const docRef = await addDoc(collection(db, "messages"), {
         name: user.displayName,
@@ -90,14 +99,6 @@ const Chatroom = () => {
   async function logOut() {
     await signOut(getAuth()).then(console.log("Logged Out"));
   }
-
-  useEffect(() => {
-    messagesBottom.current?.scrollIntoView();
-  }, [(db, messages, inptutText)]);
-
-  const scrollToBottom = () => {
-    messagesBottom.current?.scrollIntoView();
-  };
 
   async function uploadImage(file) {
     if (imageUpload == null) return;
@@ -162,7 +163,11 @@ const Chatroom = () => {
       <div className="input">
         <ArrowDownwardRounded onClick={scrollToBottom} />
         <div className="imgUpload" onClick={uploadImage}>
+          <label htmlFor="image">
+            <AddAPhotoIcon />
+          </label>
           <input
+            id="image"
             type="file"
             accept="image/*"
             className="imageInput"
@@ -170,7 +175,6 @@ const Chatroom = () => {
               setImageUpload(e.target.files[0]);
             }}
           />
-          <AddAPhotoIcon />
         </div>
         <div>
           <InsertEmoticonIcon />

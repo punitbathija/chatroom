@@ -18,7 +18,7 @@ function App() {
   const dispatch = useDispatch();
   const user = useSelector(selectUser);
   const [isLoading, setIsLoading] = useState(true);
-
+  const [room, setRoom] = useState("");
   useEffect(() => {
     onAuthStateChanged(auth, (userAuth) => {
       if (userAuth) {
