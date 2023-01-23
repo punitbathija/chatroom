@@ -1,9 +1,34 @@
-.textBody{
+.textBody sent{
     text-align: start;
     border: none;
     background-color:#f44336;
     color: white;
     padding: 2px;
+    border-radius: 1px 20px 20px 20px;
+    font-size: 16px;
+    margin-bottom: 20px;
+}
+
+.textBodysent{
+    width: 100%;
+    text-align: end;
+    padding-right: 20px;
+    border: none;
+    background-color:#f44336;
+    color: white;
+    border-radius: 20px 1px 20px 20px;
+    font-size: 16px;
+    margin-bottom: 20px;
+    
+}
+
+.textBodyreceived{
+    width: 100%;
+    text-align: start;
+    padding-left: 20px;
+    border: none;
+    background-color:#3A5F0B;
+    color: white;
     border-radius: 1px 20px 20px 20px;
     font-size: 16px;
     margin-bottom: 20px;
@@ -16,8 +41,7 @@
 }
 
 
-.my-contact{
-    /* padding: 12px; */
+.my-contactreceived{
     margin-top: 2px;
     display: flex;
     gap: 5px;
@@ -26,6 +50,27 @@
     font-size: 12px;
     justify-content: flex-start;
     padding-bottom: 2px;
+}
+
+
+
+.my-contactsent{
+    display: flex;
+    gap: 5px;
+    align-items: flex-start;
+    font-weight: 500;
+    font-size: 12px;
+    justify-content: flex-end;
+}
+
+
+.timereceived{
+    display: flex;
+    float: right;
+    font-size: 9px;
+    margin-right: 12px;
+    font-weight: 300;
+    font-family: cursive;
 }
 
 
