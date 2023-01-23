@@ -1,16 +1,6 @@
-.textBody sent{
-    text-align: start;
-    border: none;
-    background-color:#f44336;
-    color: white;
-    padding: 2px;
-    border-radius: 1px 20px 20px 20px;
-    font-size: 16px;
-    margin-bottom: 20px;
-}
-
 .textBodysent{
-    width: 100%;
+    padding: 2%;
+    width: 80%;
     text-align: end;
     padding-right: 20px;
     border: none;
@@ -19,25 +9,27 @@
     border-radius: 20px 1px 20px 20px;
     font-size: 16px;
     margin-bottom: 20px;
-    
+    margin-left: 30px;
 }
 
 .textBodyreceived{
-    width: 100%;
+    padding: 2%;
+    width: 80%;
     text-align: start;
     padding-left: 20px;
     border: none;
-    background-color:#3A5F0B;
+    background-color:#36454F;
     color: white;
     border-radius: 1px 20px 20px 20px;
     font-size: 16px;
     margin-bottom: 20px;
+    margin-left: 30px;
 }
 
 .message{
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: 10px;
 }
 
 
@@ -55,6 +47,9 @@
 
 
 .my-contactsent{
+    padding-bottom: 2px;
+    font-weight: 500;
+    font-size: 12px;
     display: flex;
     gap: 5px;
     align-items: flex-start;
@@ -71,16 +66,18 @@
     margin-right: 12px;
     font-weight: 300;
     font-family: cursive;
+    text-decoration: underline;
 }
 
 
-.time{
+.timesent{
     display: flex;
-    float: right;
+    float: left;
     font-size: 9px;
-    margin-right: 12px;
+    margin-left: 12px;
     font-weight: 300;
     font-family: cursive;
+    text-decoration: underline;
 }
 
 .spinner{
@@ -89,4 +86,10 @@
     align-items: center;
     width: 30px;
     height: 30px;
+}
+
+.line{
+    margin-top: -10px;
+    opacity: 0.5;
+    margin: 2%;
 }

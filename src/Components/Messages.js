@@ -14,12 +14,11 @@ import spinner from "../Assets/spinner.svg";
 const firebase = initializeApp(firebaseConfig);
 const auth = getAuth(firebase);
 const Message = forwardRef(
-  ({ displayName, email, profilePicture, text, timestamp }, ref) => {
+  ({ displayName, email, profilePicture, text, timestamp, uid }, ref) => {
     const user = useSelector(selectUser);
     const date = timestamp ? timestamp.toDate() : null;
     const [isLoading, setIsLoading] = useState(true);
     let time;
-
     useEffect(() => {
       if (timestamp) setIsLoading(false);
     }, [timestamp]);
@@ -34,14 +33,31 @@ const Message = forwardRef(
 
     return (
       <>
-        <div ref={ref} className="message">
-          <div className="my-contact">
+        <div className="message">
+          <div
+            className={`my-contact${
+              displayName === auth.currentUser.displayName ? "sent" : "received"
+            }`}
+          >
             <Avatar src={profilePicture}>{displayName[0]}</Avatar>
             <p>{displayName}</p>
           </div>
-          <div className="textBody">
+          <div
+            className={`textBody${
+              displayName === auth.currentUser.displayName ? "sent" : "received"
+            }`}
+          >
             <p>{text}</p>
-            <small>{time}</small>
+            <hr className="line" />
+            <small
+              className={`time${
+                displayName === auth.currentUser.displayName
+                  ? "sent"
+                  : "received"
+              }`}
+            >
+              {time}
+            </small>
           </div>
         </div>
       </>

@@ -58,6 +58,7 @@ const Chatroom = () => {
 
   const user = useSelector(selectUser);
   console.log(user);
+  console.log(getAuth().currentUser);
 
   useEffect(() => {
     const dbData = onSnapshot(recentMessages, colRef, (snapshot) => {
@@ -143,10 +144,19 @@ const Chatroom = () => {
           {messages.map(
             ({
               id,
-              data: { name, email, profilePicture, text, timestamp, photoURL },
+              data: {
+                name,
+                email,
+                profilePicture,
+                text,
+                timestamp,
+                photoURL,
+                uid,
+              },
             }) => (
               <Message
                 key={id}
+                uid={uid}
                 displayName={name}
                 email={email}
                 text={text}
