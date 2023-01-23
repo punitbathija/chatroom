@@ -1,4 +1,4 @@
-import React, { forwardRef, useState, useEffect } from "react";
+import React, { forwardRef, useRef, useState, useEffect } from "react";
 import "./Messages.css";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { useSelector } from "react-redux";
@@ -16,12 +16,18 @@ const auth = getAuth(firebase);
 const Message = forwardRef(
   ({ displayName, email, profilePicture, text, timestamp, uid }, ref) => {
     const user = useSelector(selectUser);
+    const messagesBottom = useRef(null);
     const date = timestamp ? timestamp.toDate() : null;
     const [isLoading, setIsLoading] = useState(true);
     let time;
+
     useEffect(() => {
       if (timestamp) setIsLoading(false);
     }, [timestamp]);
+
+    useEffect(() => {
+      messagesBottom.current?.scrollIntoView();
+    }, [isLoading]);
 
     if (isLoading) {
       return (time = <img src={spinner} className="spinner" />);
@@ -59,6 +65,7 @@ const Message = forwardRef(
               {time}
             </small>
           </div>
+          <div ref={messagesBottom} />
         </div>
       </>
     );
