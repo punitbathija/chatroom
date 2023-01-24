@@ -94,7 +94,11 @@
     margin: 2%;
 }
 
-.photo{
+.photoshow{
     width: 200px;
     height: 200px;
+}
+
+.photohidden{
+    display: none;
 }

@@ -38,6 +38,14 @@ const Message = forwardRef(
       time = (
         <small className="time">{moment(date).format("dddd, hh:mm")}</small>
       );
+
+      const sendData = () => {
+        if (text) {
+          return <p>{text}</p>;
+        } else {
+          return <img src={image} className="photo"></img>;
+        }
+      };
     }
 
     return (
@@ -57,8 +65,10 @@ const Message = forwardRef(
             }`}
           >
             <p>{text}</p>
-            if()
-            <img src={image} className="photo"></img>
+            <img
+              src={image}
+              className={`photo${!image ? "hidden" : "show"}`}
+            ></img>
             <hr className="line" />
             <small
               className={`time${
