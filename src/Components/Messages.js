@@ -14,7 +14,10 @@ import spinner from "../Assets/spinner.svg";
 const firebase = initializeApp(firebaseConfig);
 const auth = getAuth(firebase);
 const Message = forwardRef(
-  ({ displayName, email, profilePicture, text, timestamp, uid }, ref) => {
+  (
+    { displayName, email, profilePicture, text, timestamp, uid, image },
+    ref
+  ) => {
     const user = useSelector(selectUser);
     const messagesBottom = useRef(null);
     const date = timestamp ? timestamp.toDate() : null;
@@ -54,6 +57,8 @@ const Message = forwardRef(
             }`}
           >
             <p>{text}</p>
+            if()
+            <img src={image} className="photo"></img>
             <hr className="line" />
             <small
               className={`time${

@@ -93,3 +93,8 @@
     opacity: 0.3;
     margin: 2%;
 }
+
+.photo{
+    width: 200px;
+    height: 200px;
+}

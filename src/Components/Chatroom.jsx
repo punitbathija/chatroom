@@ -44,7 +44,6 @@ const Chatroom = () => {
   const [messages, setMessages] = useState([]);
   const [inptutText, setInputText] = useState("");
   const [file, setFile] = useState(null);
-  // const [imageList, setImageList] = useState([]);
   const colRef = collection(db, "messages");
   const messagesBottom = useRef(null);
 
@@ -148,6 +147,7 @@ const Chatroom = () => {
             ({
               id,
               data: {
+                imageUrl,
                 name,
                 email,
                 profilePicture,
@@ -166,6 +166,7 @@ const Chatroom = () => {
                 profilePicture={profilePicture}
                 photoURL={photoURL}
                 timestamp={timestamp}
+                image={imageUrl}
               />
             )
           )}
