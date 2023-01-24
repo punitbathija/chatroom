@@ -33,6 +33,7 @@ import {
   uploadBytesResumable,
   getDownloadURL,
 } from "firebase/storage";
+import { v4 } from "uuid";
 
 const firebase = initializeApp(firebaseConfig);
 const db = getFirestore(firebase);
@@ -42,12 +43,12 @@ const storage = getStorage(firebase);
 const Chatroom = () => {
   const [messages, setMessages] = useState([]);
   const [inptutText, setInputText] = useState("");
-  const [imageUpload, setImageUpload] = useState(null);
+  const [file, setFile] = useState(null);
+  // const [imageList, setImageList] = useState([]);
   const colRef = collection(db, "messages");
   const messagesBottom = useRef(null);
 
   console.log(messages);
-  console.log(imageUpload);
   const recentMessages = query(
     collection(db, "messages"),
     orderBy("timestamp"),
@@ -93,38 +94,42 @@ const Chatroom = () => {
     setInputText("");
   }
 
-  const saveImageMessage = async (file) => {};
-
   async function logOut() {
     await signOut(getAuth()).then(console.log("Logged Out"));
   }
 
-  async function uploadImage(file) {
-    if (imageUpload == null) return;
+  async function uploadImage() {
     try {
-      const messageRef = await addDoc(collection(db, "messages"), {
-        name: user.displayName,
+      const messageRef = await addDoc(collection(getFirestore(), "messages"), {
+        name: getAuth().currentUser.displayName,
         imageUrl: spinner,
-        profilePicture: user.photoURL || "",
+        profilePicUrl: getAuth().currentUser.photoURL,
         timestamp: serverTimestamp(),
       });
 
       const filePath = `${getAuth().currentUser.uid}/${messageRef.id}/${
         file.name
       }`;
-      const newImageRef = ref(getStorage(), filePath);
-      const fileSnapshot = await uploadBytesResumable(newImageRef, file);
 
-      const publicImageUrl = await getDownloadURL(newImageRef);
+      const imageRef = ref(getStorage(), filePath);
+      const fileSnapshot = await uploadBytesResumable(imageRef, file);
+      const downloadImageUrl = await getDownloadURL(imageRef);
+      console.log(downloadImageUrl);
 
       await updateDoc(messageRef, {
-        imageUrl: publicImageUrl,
+        imageUrl: downloadImageUrl,
         storageUri: fileSnapshot.metadata.fullPath,
       });
     } catch (error) {
-      console.log(error, "Error sending the message");
+      console.error(
+        "Someting went wrong while uploading the image to server" + error
+      );
     }
   }
+  const handleFile = (e) => {
+    setFile(e.target.files[0]);
+  };
+
   return (
     <div className="chatroom">
       <div className="profile">
@@ -170,19 +175,17 @@ const Chatroom = () => {
 
       <div className="input">
         <ArrowDownwardRounded onClick={scrollToBottom} />
-        <div className="imgUpload" onClick={uploadImage}>
-          <label htmlFor="image">
-            <AddAPhotoIcon />
-          </label>
+        <label htmlFor="image">
+          <AddAPhotoIcon />
+        </label>
+        <div className="imgUpload">
           <input
             id="image"
             type="file"
-            accept="image/*"
             className="imageInput"
-            onChange={(e) => {
-              setImageUpload(e.target.files[0]);
-            }}
+            onChange={handleFile}
           />
+          <button onClick={uploadImage}>Click</button>
         </div>
         <div>
           <InsertEmoticonIcon />
