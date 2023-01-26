@@ -98,6 +98,7 @@ const Chatroom = () => {
   }
 
   async function uploadImage() {
+    if (file === null) return;
     try {
       const messageRef = await addDoc(collection(getFirestore(), "messages"), {
         name: getAuth().currentUser.displayName,
@@ -179,15 +180,17 @@ const Chatroom = () => {
         <label htmlFor="image">
           <AddAPhotoIcon />
         </label>
-        <div className="imgUpload">
-          <input
-            id="image"
-            type="file"
-            className="imageInput"
-            onChange={handleFile}
-          />
-          <button onClick={uploadImage}>Click</button>
-        </div>
+        <input
+          id="image"
+          type="file"
+          className="imageInput"
+          onChange={handleFile}
+          onClick={() => {
+            if (file === null) return;
+            uploadImage();
+            setFile(null);
+          }}
+        />
         <div>
           <InsertEmoticonIcon />
         </div>
