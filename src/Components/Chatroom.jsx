@@ -103,7 +103,7 @@ const Chatroom = () => {
       const messageRef = await addDoc(collection(getFirestore(), "messages"), {
         name: getAuth().currentUser.displayName,
         imageUrl: spinner,
-        profilePicUrl: getAuth().currentUser.photoURL,
+        profilePicture: getAuth().currentUser.photoURL || user.photoUrl,
         timestamp: serverTimestamp(),
       });
 
