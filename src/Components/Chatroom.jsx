@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import "./Chatroom.css";
+import IosShareIcon from "@mui/icons-material/IosShare";
 import AddAPhotoIcon from "@mui/icons-material/AddAPhoto";
 import InsertEmoticonIcon from "@mui/icons-material/InsertEmoticon";
 import LogoutIcon from "@mui/icons-material/Logout";
@@ -185,12 +186,18 @@ const Chatroom = () => {
           type="file"
           className="imageInput"
           onChange={handleFile}
-          onClick={() => {
-            if (file === null) return;
-            uploadImage();
-            setFile(null);
-          }}
         />
+        {file && (
+          <div
+            onClick={() => {
+              if (file === null) return;
+              uploadImage();
+              setFile(null);
+            }}
+          >
+            <IosShareIcon />
+          </div>
+        )}
         <div>
           <InsertEmoticonIcon />
         </div>
