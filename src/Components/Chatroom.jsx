@@ -204,6 +204,7 @@ const Chatroom = () => {
         <form onSubmit={sendChat} className="sendChat">
           <input
             type="text"
+            placeholder="enter text here"
             className="text-input"
             value={inptutText}
             onChange={(e) => setInputText(e.target.value)}

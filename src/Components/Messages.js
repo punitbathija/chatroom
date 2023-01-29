@@ -64,7 +64,7 @@ const Message = forwardRef(
               displayName === auth.currentUser.displayName ? "sent" : "received"
             }`}
           >
-            <p>{text}</p>
+            <p className="text">{text}</p>
             <img
               src={image}
               className={`photo${!image ? "hidden" : "show"}`}

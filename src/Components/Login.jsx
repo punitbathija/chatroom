@@ -13,8 +13,19 @@ import {
 import { useDispatch } from "react-redux";
 import { login } from "../features/userSlice";
 import { selectUser } from "../features/userSlice";
-import Cookies from "universal-cookie";
-const cookies = new Cookies();
+import {
+  getFirestore,
+  collection,
+  addDoc,
+  query,
+  orderBy,
+  limit,
+  onSnapshot,
+  setDoc,
+  updateDoc,
+  doc,
+  serverTimestamp,
+} from "firebase/firestore";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -22,6 +33,7 @@ function Login() {
   const firebase = initializeApp(firebaseConfig);
   const auth = getAuth(firebase);
   const dispatch = useDispatch();
+  const db = getFirestore(firebase);
 
   const loginToApp = (e) => {
     signInWithEmailAndPassword(auth, email, password).then(
@@ -48,7 +60,13 @@ function Login() {
           photoUrl: userCredentials.user.photoURL,
         })
       );
-      console.log(userCredentials.user);
+
+      const userRef = addDoc(collection(getFirestore(), "users"), {
+        email: userCredentials.user.email,
+        uid: userCredentials.user.uid,
+        displayName: userCredentials.user.displayName,
+        photoUrl: userCredentials.user.photoURL,
+      });
     });
   }
 
