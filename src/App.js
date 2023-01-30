@@ -11,6 +11,7 @@ import { login, logout, selectUser } from "./features/userSlice";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import Messages from "./Components/Messages";
 import spinner from "./Assets/spinner.svg";
+import Sidebar from "./Components/SIdebar";
 
 function App() {
   const firebase = initializeApp(firebaseConfig);
@@ -50,6 +51,7 @@ function App() {
         </div>
       )}
       <Signup />
+      <Sidebar />
     </div>
   );
 }
