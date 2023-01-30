@@ -49,6 +49,7 @@ function App() {
           {isLoading ? <img src={spinner} className="spinner" /> : <Chatroom />}
         </div>
       )}
+      <Signup />
     </div>
   );
 }

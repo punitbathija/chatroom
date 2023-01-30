@@ -13,11 +13,13 @@ import {
 } from "firebase/auth";
 import { useDispatch } from "react-redux";
 import { login } from "../features/userSlice";
+import { getFirestore, collection, addDoc } from "firebase/firestore";
 
 function Signup() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [displayName, setDisplayName] = useState("");
+  const [photoURL, setPhotoURL] = useState("");
 
   const firebase = initializeApp(firebaseConfig);
   const auth = getAuth(firebase);
@@ -28,8 +30,23 @@ function Signup() {
       .then((userCredentials) => {
         updateProfile(userCredentials.user, {
           displayName: displayName,
+          photoURL: photoURL,
         });
+        dispatch(
+          login({
+            email: userCredentials.user.email,
+            uid: userCredentials.user.uid,
+            displayName: userCredentials.user.displayName,
+            photoURL: userCredentials.user.photoURL,
+          })
+        );
         console.log("User Signed Up" + userCredentials.user);
+        const userRef = addDoc(collection(getFirestore(), "users"), {
+          email: email,
+          uid: userCredentials.user.uid,
+          displayName: displayName,
+          photoURL: photoURL,
+        });
       })
       .catch((error) => {
         console.log(error);
@@ -44,9 +61,16 @@ function Signup() {
           email: userCredentials.user.email,
           uid: userCredentials.user.uid,
           displayName: userCredentials.user.displayName,
+          photoURL: userCredentials.user.photoURL,
         })
       );
       console.log("User Signed Up Using Google" + userCredentials.user);
+      const userRef = addDoc(collection(getFirestore(), "users"), {
+        email: userCredentials.user.email,
+        uid: userCredentials.user.uid,
+        displayName: userCredentials.user.displayName,
+        photoUrl: userCredentials.user.photoURL,
+      });
     });
   }
 
@@ -57,16 +81,7 @@ function Signup() {
         <TextField
           color="error"
           id="outlined-basic"
-          label="display name"
-          variant="outlined"
-          type="text"
-          value={displayName}
-          onChange={(e) => setDisplayName(e.target.value)}
-        />
-        <TextField
-          color="error"
-          id="outlined-basic"
-          label="email"
+          label="Email"
           variant="outlined"
           type="email"
           value={email}
@@ -77,9 +92,27 @@ function Signup() {
           id="outlined-basic"
           label="password"
           variant="outlined"
-          type="password"
+          type="Password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
+        />
+        <TextField
+          color="error"
+          id="outlined-basic"
+          label="Display name"
+          variant="outlined"
+          type="text"
+          value={displayName}
+          onChange={(e) => setDisplayName(e.target.value)}
+        />
+        <TextField
+          color="error"
+          id="outlined-basic"
+          label="Profile picture link"
+          variant="outlined"
+          type="text"
+          value={photoURL}
+          onChange={(e) => setPhotoURL(e.target.value)}
         />
         <Button color="error" variant="contained" fullWidth onClick={signUp}>
           Sign Up

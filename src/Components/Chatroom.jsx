@@ -78,15 +78,18 @@ const Chatroom = () => {
     messagesBottom.current?.scrollIntoView();
   };
 
+  console.log(user);
   async function sendChat(e) {
     e.preventDefault();
     if (inptutText === "") return;
     try {
       const docRef = await addDoc(collection(db, "messages"), {
+        // id:
         name: user.displayName,
         text: inptutText,
         profilePicture: user.photoUrl || "",
         timestamp: serverTimestamp(),
+        uid: user.uid,
       });
     } catch (error) {
       console.log(error, "Error sending the message");
@@ -106,6 +109,7 @@ const Chatroom = () => {
         imageUrl: spinner,
         profilePicture: getAuth().currentUser.photoURL || user.photoUrl,
         timestamp: serverTimestamp(),
+        uid: getAuth().currentUser.uid,
       });
 
       const filePath = `${getAuth().currentUser.uid}/${messageRef.id}/${
