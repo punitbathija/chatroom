@@ -21,11 +21,33 @@ import {
 } from "firebase/firestore";
 import { async } from "@firebase/util";
 
+import { selectUser } from "../features/userSlice";
+import { useSelector } from "react-redux";
+
 function Sidebar() {
+  const firebase = initializeApp(firebaseConfig);
+  const db = getFirestore(firebase);
   const [userName, setUserName] = useState("");
   const [user, setUser] = useState("");
   const [err, setErr] = useState(false);
+  const currentUser = useSelector(selectUser);
 
+  console.log(currentUser);
+
+  const handldeSelect = async () => {
+    const combinedId =
+      currentUser.uid > user.uid
+        ? currentUser.uid + user.uid
+        : user.uid + currentUser.uid;
+    try {
+      const res = await getDocs(db, "chats", combinedId);
+      if (!res.exsist()) {
+        await setDoc(doc, (db, "chats", combinedId), { messages: [] });
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
   const handldeSearch = async () => {
     const q = query(
       collection(db, "users"),
@@ -34,7 +56,8 @@ function Sidebar() {
     try {
       const querySnapshot = await getDocs(q);
       querySnapshot.forEach((doc) => setUser(doc.data()));
-      console.log(querySnapshot);
+      console.log(user);
+      console.log(userName);
     } catch (err) {
       setErr(true);
     }
@@ -43,9 +66,6 @@ function Sidebar() {
   const handldeKey = (e) => {
     e.code === "Enter" && handldeSearch();
   };
-
-  const firebase = initializeApp(firebaseConfig);
-  const db = getFirestore(firebase);
 
   return (
     <div className="sidebar">
@@ -60,8 +80,8 @@ function Sidebar() {
       </div>
       {err && <span>User not found</span>}
       {user && (
-        <div className="userChat">
-          <img src={user.photoUrl} />
+        <div className="userChat" onClick={handldeSelect}>
+          <img src={user.photoURL || user.photoUrl} />
           <div className="userChatInfo">
             <span>{user.displayName}</span>
           </div>
