@@ -43,6 +43,7 @@ const storage = getStorage(firebase);
 
 const Chatroom = () => {
   const [messages, setMessages] = useState([]);
+  const [chats, setChats] = useState([]);
   const [inptutText, setInputText] = useState("");
   const [file, setFile] = useState(null);
   const colRef = collection(db, "messages");
@@ -59,31 +60,35 @@ const Chatroom = () => {
   console.log(user);
   console.log(getAuth().currentUser);
 
-  // useEffect(() => {
-  //   const unsub = onSnapshot(recentMessages, colRef, (snapshot) => {
-  //     setMessages(
-  //       snapshot.docs.map((doc) => ({
-  //         id: doc.id,
-  //         data: doc.data(),
-  //       }))
-  //     );
-  //   });
+  useEffect(() => {
+    const unsub = onSnapshot(recentMessages, colRef, (snapshot) => {
+      setMessages(
+        snapshot.docs.map((doc) => ({
+          id: doc.id,
+          data: doc.data(),
+        }))
+      );
+    });
 
-  //   return () => {
-  //     unsub();
-  //   };
-  // }, []);
+    return () => {
+      unsub();
+    };
+  }, []);
 
   useEffect(() => {
     const getChats = () => {
       const unsub = onSnapshot(doc(db, "userchats", user.uid), (doc) => {
-        setMessages(doc.data());
+        setChats(doc.data());
       });
       return () => {
         unsub();
       };
     };
-  });
+
+    user.uid && getChats();
+  }, [user.uid]);
+
+  // console.log(chats);
 
   useEffect(() => {
     messagesBottom.current.scrollIntoView();
@@ -94,12 +99,28 @@ const Chatroom = () => {
   };
 
   console.log(user);
+  // async function sendChat(e) {
+  //   e.preventDefault();
+  //   if (inptutText === "") return;
+  //   try {
+  //     const docRef = await addDoc(collection(db, "messages"), {
+  //       name: user.displayName,
+  //       text: inptutText,
+  //       profilePicture: user.photoUrl || "",
+  //       timestamp: serverTimestamp(),
+  //       uid: user.uid,
+  //     });
+  //   } catch (error) {
+  //     console.log(error, "Error sending the message");
+  //   }
+  //   setInputText("");
+  // }
+
   async function sendChat(e) {
     e.preventDefault();
     if (inptutText === "") return;
     try {
-      const docRef = await addDoc(collection(db, "messages"), {
-        // id:
+      const docRef = await addDoc(collection(db, "chats"), {
         name: user.displayName,
         text: inptutText,
         profilePicture: user.photoUrl || "",
