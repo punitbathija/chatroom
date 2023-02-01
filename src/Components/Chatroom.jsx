@@ -59,16 +59,31 @@ const Chatroom = () => {
   console.log(user);
   console.log(getAuth().currentUser);
 
+  // useEffect(() => {
+  //   const unsub = onSnapshot(recentMessages, colRef, (snapshot) => {
+  //     setMessages(
+  //       snapshot.docs.map((doc) => ({
+  //         id: doc.id,
+  //         data: doc.data(),
+  //       }))
+  //     );
+  //   });
+
+  //   return () => {
+  //     unsub();
+  //   };
+  // }, []);
+
   useEffect(() => {
-    const dbData = onSnapshot(recentMessages, colRef, (snapshot) => {
-      setMessages(
-        snapshot.docs.map((doc) => ({
-          id: doc.id,
-          data: doc.data(),
-        }))
-      );
-    });
-  }, []);
+    const getChats = () => {
+      const unsub = onSnapshot(doc(db, "userchats", user.uid), (doc) => {
+        setMessages(doc.data());
+      });
+      return () => {
+        unsub();
+      };
+    };
+  });
 
   useEffect(() => {
     messagesBottom.current.scrollIntoView();

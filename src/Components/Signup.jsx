@@ -13,7 +13,13 @@ import {
 } from "firebase/auth";
 import { useDispatch } from "react-redux";
 import { login } from "../features/userSlice";
-import { getFirestore, collection, addDoc } from "firebase/firestore";
+import {
+  getFirestore,
+  collection,
+  addDoc,
+  setDoc,
+  doc,
+} from "firebase/firestore";
 import MonochromePhotosIcon from "@mui/icons-material/MonochromePhotos";
 import {
   getDownloadURL,
@@ -63,6 +69,7 @@ function Signup() {
         photoURL: photoURL,
       });
     });
+    await setDoc(doc(getFirestore(), "userChats", res.user.uid), {});
   }
 
   async function signupWGoogle() {
